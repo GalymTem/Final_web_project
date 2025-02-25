@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🎮 Video Game Quiz</title>
+    <script>
+        let timeLeft = 300; // Установить таймер на 5 минут (300 секунд)
+        function countdown() {
+            if (timeLeft <= 0) {
+                document.getElementById("quizForm").submit(); // Автоматическая отправка формы по истечении времени
+            } else {
+                document.getElementById("timer").innerText = timeLeft; // Обновляем таймер на странице
+                timeLeft--;
+                setTimeout(countdown, 1000); // Обновление каждую секунду
+            }
+        }
+        window.onload = countdown; // Запускаем таймер при загрузке страницы
+    </script>
+    <style>
+        .container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .quiz-question {
+            margin-bottom: 20px;
+        }
+        .quiz-question input {
+            margin-right: 10px;
+        }
+        #timer {
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🎮 Video Game Quiz</h2>
+        <p>⏳ Time left: <span id="timer">300</span> seconds</p>
+        
+        <form id="quizForm" action="/quiz/submit" method="POST">
+            <% questions.forEach((q, index) => { %>
+                <div class="quiz-question">
+                    <p><strong><%= index + 1 %>. <%= q.question %></strong></p>
+                    <% q.options.forEach(option => { %>
+                        <label>
+                            <input type="radio" name="answers[<%= index %>]" value="<%= option %>" required> <%= option %>
+                        </label><br>
+                    <% }) %>
+                </div>
+            <% }) %>
+
+            <button type="submit" class="btn">Submit</button>
+        </form>
+
+        <!-- Кнопка возврата на главную страницу -->
+        <a href="/mainPage" class="btn">Back to Main Page</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<nav style="background: #007bff; padding: 10px; color: white;">
+    <ul style="list-style: none; display: flex; justify-content: space-around; margin: 0; padding: 0;">
+        <li><a href="/mainPage" style="color: white; text-decoration: none; font-weight: bold;">Home</a></li>
+        <li><a href="/gameSearch" style="color: white; text-decoration: none; font-weight: bold;">Game Search</a></li>
+        <li><a href="/admin" style="color: white; text-decoration: none; font-weight: bold;">Admin Panel</a></li>
+        <li><a href="/weather" style="color: white; text-decoration: none; font-weight: bold;">Weather</a></li>
+        <li><a href="/logout" style="color: white; text-decoration: none; font-weight: bold;">Logout</a></li>
+    </ul>
+</nav>
+
+<!-- Optional: Mobile-Friendly Menu (Hamburger Icon) -->
+<script>
+    const navbar = document.querySelector('nav ul');
+    const menuToggle = document.createElement('button');
+    menuToggle.textContent = '☰';
+    menuToggle.style.background = 'none';
+    menuToggle.style.border = 'none';
+    menuToggle.style.color = 'white';
+    menuToggle.style.fontSize = '20px';
+    menuToggle.style.padding = '10px';
+    navbar.insertBefore(menuToggle, navbar.firstChild);
+
+    menuToggle.addEventListener('click', () => {
+        navbar.classList.toggle('open');
+    });
+
+    // Simple CSS for the mobile menu toggle
+    const css = `
+        /* Hide menu items initially on mobile */
+        nav ul.open {
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0;
+        }
+        nav ul li {
+            padding: 10px 0;
+        }
+        nav ul li a {
+            padding: 10px;
+            display: block;
+            text-align: center;
+        }
+
+        /* Hide the menu on small screens */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+            }
+            nav ul.open {
+                display: flex;
+            }
+            nav ul li {
+                width: 100%;
+            }
+        }
+    `;
+    const style = document.createElement('style');
+    style.innerHTML = css;
+    document.head.appendChild(style);
+</script>

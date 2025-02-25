@@ -1,0 +1,6 @@
+            <% users.forEach(user => { %>
+            <tr>
+                <td><%= users.username %> </td>
+                <td><%= users.password %> </td>
+            </tr>
+            <% }); %>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Video Games</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <%- include('partials/navbar') %> <!-- Включаем navbar -->
+
+    <div class="container mt-5">
+        <h2>🎮 Search Video Games</h2>
+
+        <!-- Поле поиска -->
+        <div>
+            <label for="game-search">Search for a Game:</label>
+            <input type="text" id="game-search" placeholder="Enter game name">
+            <button onclick="searchGame()">Search</button>
+        </div>
+
+        <!-- Фильтрация по жанру -->
+        <div>
+            <label for="genre">Select Genre:</label>
+            <select id="genre" name="genre">
+                <option value="action">Action</option>
+                <option value="adventure">Adventure</option>
+                <option value="strategy">Strategy</option>
+            </select>
+        </div>
+
+        <!-- Отображение результатов -->
+        <div id="game-results">
+            <h3>Results from RAWG:</h3>
+            <% if (rawgGames && rawgGames.length > 0) { %>
+                <ul class="list-group">
+                    <% rawgGames.forEach(game => { %>
+                        <li class="list-group-item">
+                            <h5><%= game.name %></h5>
+                            <p>Release Date: <%= game.released %></p>
+                            <img src="<%= game.background_image %>" alt="<%= game.name %>" width="200px">
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p>No results found from RAWG</p>
+            <% } %>
+
+            <h3>Game Details from Giant Bomb:</h3>
+            <% if (gameDetails && gameDetails.original_release_date) { %>
+                <p><strong>Release Date:</strong> <%= gameDetails.original_release_date %></p>
+            <% } else { %>
+                <p>No detailed information available from Giant Bomb.</p>
+            <% } %>
+
+            <!-- История запросов -->
+            <h3>Request/Response History:</h3>
+            <% if (requestHistory.length > 0) { %>
+                <ul class="list-group">
+                    <% requestHistory.forEach(item => { %>
+                        <li class="list-group-item">
+                            <h5>Search Query: <%= item.query %> <%= item.genre ? `- Genre: ${item.genre}` : '' %></h5>
+                            <p><strong>Results:</strong></p>
+                            <ul>
+                                <% item.response.forEach(game => { %>
+                                    <li><%= game.name %></li>
+                                <% }) %>
+                            </ul>
+                            <p><strong>Release Date from Giant Bomb:</strong> <%= item.gameDetails.original_release_date || 'N/A' %></p>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p>No search history yet.</p>
+            <% } %>
+        </div>
+
+        <script>
+            function searchGame() {
+                const query = document.getElementById('game-search').value;
+                const genre = document.getElementById('genre').value;
+                window.location.href = `/gameSearch?query=${query}&genre=${genre}`;
+            }
+        </script>
+    </div>
+</body>
+</html>

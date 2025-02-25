@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        .ItemFormBox {
+            display: flex;
+            width: 100px;
+            flex-justify: row;
+        }
+    </style>
+</head>
+<body>
+<%- include('partials/navbar') %>
+      <div class="ItemFormBox">
+          <form id="itemForm" method="POST" action="/admin/edit/<%= item.id %>">
+
+              <h1> <b> Edit Item </b> </h1>
+              <input type="text" id="url1" name="url1" value="<%= item.url1 %>" placeholder="url1" required>
+              <input type="text" id="url2" name="url2" value="<%= item.url2 %>" placeholder="url2" required>
+              <input type="text" id="url3" name="url3" value="<%= item.url3 %>" placeholder="url3" required>
+
+              <input type="text" id="name_ru" name="name_ru" value="<%= item.name_ru %>" placeholder="name in russian" required>
+              <input type="text" id="name_en" name="name_en" value="<%= item.name_en %>" placeholder="name in english" required>
+
+              <input type="text" id="desc_ru" name="desc_ru" value="<%= item.desc_ru %>" placeholder="description in russian" required>
+              <input type="text" id="desc_en" name="desc_en" value="<%= item.desc_en %>" placeholder="description in english" required>
+
+
+              <button class="btn btn-primary" type="submit"> Edit </button>
+
+          </form>
+      </div>
+</div>
+</body>
+</html>

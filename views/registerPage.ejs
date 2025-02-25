@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to TODO list!</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e9ecef;
+
+        }
+
+        .register-box {
+            width: 300px;
+            height: 400px;
+            background-color: #f4f4f4;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .register-box input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .register-box button {
+            width: 90%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .register-box button:hover {
+            background-color: #0056b3;
+        }
+        .LOGIN {
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="register-box">
+    <form id="registerForm" method="POST" action="/register">
+
+        <h1> <b> New account </b> </h1>
+        <input type="text" id="name" name="name" placeholder="Your name" required>
+       <!-- <input type="text" id="username" name="username" placeholder="Username" required> -->
+        <input type="password" id="password" name="password" placeholder="Password" required>
+        <button type="submit"> Create </button>
+
+         <p style="color: red"> <%= ERROR_LOG %> </p>
+    </form>
+
+    <div class="LOGIN">
+        <a href="/"> Log in </a>
+    </div>
+</div>
+
+
+</body>
+</html>

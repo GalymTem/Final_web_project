@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        .body {
+
+        }
+        .ItemFormBox {
+            display: flex;
+            width: 0px;
+            flex-justify: row;
+        }
+    </style>
+</head>
+<body>
+<%- include('partials/navbar') %>
+
+<h1 style="text-align: center;">Admin Panel</h1>
+
+<!-- Users Management -->
+<div style="max-width: 800px; margin-left: 10px; padding: 20px;">
+    <h2>Manage Users</h2>
+    <table border="1" style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead>
+            <tr>
+                <th>userID</th>
+                <th>username</th>
+                <th>hash_password</th>
+                <th>creationDate</th>
+                <th>updateDate</th>
+                <th>deletionDate</th>
+                <th>adminStatus</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% users.forEach(user => { %>
+            <tr>
+                <td><%= user.userID %></td>
+                <td><%= user.username %></td>
+                <td><%= user.password %></td>
+                <td><%= user.creationDate %></td>
+                <td><%= user.updateDate %></td>
+                <td><%= user.deletionDate %></td>
+                <td><%= user.adminStatus %></td>
+                <td>
+                    <form action="/admin/delete/<%= user._id %>" method="POST" style="display: inline;">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    <h3>Add New User</h3>
+<form action="/admin/addUser" method="POST">
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <span>Admin: </span>
+    <input type="checkbox" id="toggle" name="adminStatus">
+    <p style="color: red"> <%= ERROR_LOG %> </p>  <!-- Выводим ошибку, если она есть -->
+    <button type="submit" class="btn btn-primary">Add User</button>
+</form>
+
+</div>
+
+<!-- Items Management -->
+<h1 style="text-align: center;">Items Panel</h1>
+<div class="container mt-5">
+    <div class="ItemFormBox">
+        <form id="itemForm" method="POST" action="/admin/add">
+            <h1><b>New Item</b></h1>
+            <input type="text" id="url1" name="url1" placeholder="url1" required>
+            <input type="text" id="url2" name="url2" placeholder="url2" required>
+            <input type="text" id="url3" name="url3" placeholder="url3" required>
+            <input type="text" id="name_ru" name="name_ru" placeholder="name in Russian" required>
+            <input type="text" id="name_en" name="name_en" placeholder="name in English" required>
+            <input type="text" id="desc_ru" name="desc_ru" placeholder="description in Russian" required>
+            <input type="text" id="desc_en" name="desc_en" placeholder="description in English" required>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Picture</th>
+                <th>Second Picture</th>
+                <th>Third Picture</th>
+                <th>Name (RU)</th>
+                <th>Name (EN)</th>
+                <th>Description (RU)</th>
+                <th>Description (EN)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% items.forEach(item => { %>
+            <tr>
+                <td><%= item._id %></td>
+                <td><img src="<%= item.url1 %>" width="50px" height="50px"></td>
+                <td><img src="<%= item.url2 %>" width="50px" height="50px"></td>
+                <td><img src="<%= item.url3 %>" width="50px" height="50px"></td>
+                <td><%= item.name_ru %></td>
+                <td><%= item.name_en %></td>
+                <td><%= item.desc_ru %></td>
+                <td><%= item.desc_en %></td>
+                <td>
+                    <form action="/admin/del/<%= item._id %>" method="POST">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </td>
+                <td>
+                    <a href="/admin/edit/<%= item._id %>" class="btn btn-sm btn-warning">Edit</a>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<!-- Manage Video Game Quiz -->
+<h2>Manage Video Game Quiz</h2>
+<form action="/admin/addQuestion" method="POST">
+    <input type="text" name="question" placeholder="Enter Question" required>
+    <input type="text" name="option1" placeholder="Option 1" required>
+    <input type="text" name="option2" placeholder="Option 2" required>
+    <input type="text" name="option3" placeholder="Option 3" required>
+    <input type="text" name="option4" placeholder="Option 4" required>
+    <input type="text" name="answer" placeholder="Correct Answer" required>
+    <button type="submit" class="btn btn-primary">Add Question</button>
+</form>
+
+<h3>Existing Questions</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Question</th>
+            <th>Options</th>
+            <th>Answer</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% quiz.forEach(q => { %>
+        <tr>
+            <td><%= q.question %></td>
+            <td><%= q.options.join(", ") %></td>
+            <td><%= q.answer %></td>
+            <td>
+                <!-- Edit Question Button -->
+                <a href="/admin/editQuestion/<%= q._id %>" class="btn btn-sm btn-warning">Edit</a>
+                <form action="/admin/deleteQuestion/<%= q._id %>" method="POST" style="display: inline;">
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        <% }) %>
+    </tbody>
+</table>
+
+</body>
+</html>
